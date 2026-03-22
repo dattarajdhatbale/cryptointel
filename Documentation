@@ -1,0 +1,279 @@
+# CryptoIntel AI — Technical Documentation
+
+## 1. Overview
+
+CryptoIntel AI is a frontend-focused cryptocurrency trading dashboard designed to provide real-time market insights, AI-driven trade analysis, and user notifications. The system is built using a modular React architecture with efficient data handling and extensible AI utilities.
+
+---
+
+## 2. System Architecture
+
+### 2.1 High-Level Architecture
+
+The application follows a **client-side architecture** with separation of concerns:
+
+* **UI Layer** → React Components
+* **State Layer** → Context API
+* **Data Layer** → Custom Hooks (API fetching)
+* **Logic Layer** → Utility functions (AI + helpers)
+
+```
+UI Components → Context → Hooks → External API
+                         ↓
+                     AI Utilities
+```
+
+---
+
+### 2.2 Component Architecture
+
+The application is divided into reusable components:
+
+* **Dashboard**: Central hub for displaying market data and signals
+* **ChartView**: Handles graphical representation of price data
+* **TradeSignals**: Displays AI-generated signals
+* **TradeDisplay**: Shows trade insights and metrics
+* **Notifications**: Manages alerts and user updates
+* **Settings**: User configuration panel
+* **Navbar**: Navigation and layout structure
+
+Each component is **independent and reusable**, promoting scalability.
+
+---
+
+### 2.3 State Management
+
+State is managed using **React Context API**:
+
+* `TradeContext` provides:
+
+  * Market data
+  * Trade signals
+  * User preferences
+  * Notification states
+
+Advantages:
+
+* Avoids prop drilling
+* Centralized state logic
+* Easy scalability
+
+---
+
+### 2.4 Data Flow
+
+1. `useBinanceData` fetches market data
+2. Data is stored in `TradeContext`
+3. Components consume data via context
+4. AI utilities process raw data into insights
+5. UI renders processed results
+
+---
+
+## 3. API Usage
+
+### 3.1 Binance Data Integration
+
+The application uses a custom hook:
+
+#### `useBinanceData.ts`
+
+Responsibilities:
+
+* Fetch real-time price data
+* Handle polling or updates
+* Normalize API response
+* Provide structured data to components
+
+Typical flow:
+
+```
+Fetch → Parse → Store → Provide via Context
+```
+
+---
+
+### 3.2 Data Handling Strategy
+
+* Lightweight fetch logic
+* Separation of fetching and UI rendering
+* Error handling at hook level
+* Scalable for adding more APIs
+
+---
+
+## 4. AI Integration
+
+### 4.1 AI Analysis Module
+
+Located in:
+
+```
+src/utils/aiAnalysis.ts
+```
+
+Responsibilities:
+
+* Analyze market trends
+* Generate trade signals (buy/sell/hold)
+* Provide confidence metrics or insights
+
+---
+
+### 4.2 AI Processing Flow
+
+```
+Raw Market Data
+      ↓
+AI Analysis (aiAnalysis.ts)
+      ↓
+Processed Signals
+      ↓
+Displayed in UI (TradeSignals / Dashboard)
+```
+
+---
+
+### 4.3 Design Approach
+
+* AI logic is **decoupled from UI**
+* Easily replaceable with:
+
+  * External ML models
+  * API-based AI services
+* Currently rule-based or heuristic-driven
+
+---
+
+## 5. Utilities
+
+### 5.1 `cn.ts`
+
+* Utility for class name merging (Tailwind optimization)
+
+### 5.2 `aiAnalysis.ts`
+
+* Core logic for decision-making
+* Converts raw data into actionable insights
+
+---
+
+## 6. Type System
+
+Located in:
+
+```
+src/types/index.ts
+```
+
+Purpose:
+
+* Define data contracts
+* Ensure type safety
+* Improve developer experience
+
+---
+
+## 7. Setup Guide
+
+### 7.1 Prerequisites
+
+* Node.js (v18 or higher recommended)
+* npm or yarn
+
+---
+
+### 7.2 Installation
+
+```bash
+git clone <your-repo-url>
+cd probstat
+npm install
+```
+
+---
+
+### 7.3 Development
+
+```bash
+npm run dev
+```
+
+Runs the app locally using Vite.
+
+---
+
+### 7.4 Production Build
+
+```bash
+npm run build
+```
+
+---
+
+### 7.5 Preview Build
+
+```bash
+npm run preview
+```
+
+---
+
+## 8. Environment Configuration
+
+For EmailJS integration:
+
+```
+VITE_EMAILJS_PUBLIC_KEY=your_key
+VITE_EMAILJS_SERVICE_ID=your_service
+VITE_EMAILJS_TEMPLATE_ID=your_template
+```
+
+Ensure variables are stored in a `.env` file.
+
+---
+
+## 9. Extensibility
+
+The project is designed for easy extension:
+
+### Add new APIs
+
+* Create new hook in `hooks/`
+* Inject into context
+
+### Enhance AI
+
+* Extend `aiAnalysis.ts`
+* Replace with external ML API
+
+### Add features
+
+* Create new component
+* Connect to context
+
+---
+
+## 10. Performance Considerations
+
+* Vite ensures fast builds and HMR
+* Minimal global state reduces re-renders
+* Modular components improve maintainability
+
+---
+
+## 11. Future Enhancements
+
+* Backend integration for persistence
+* Authentication and user profiles
+* Advanced AI/ML models
+* Real-time WebSocket data
+* Portfolio tracking and analytics
+
+---
+
+## 12. Conclusion
+
+CryptoIntel AI is structured as a scalable, modular frontend system with clear separation between data, logic, and presentation. Its architecture allows easy integration of advanced AI models and additional data sources, making it suitable for both experimentation and production-level enhancements.
+
+---
